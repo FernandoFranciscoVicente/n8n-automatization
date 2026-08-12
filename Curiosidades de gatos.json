@@ -1,0 +1,135 @@
+{
+  "name": "Curiosidades de gatos",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1cacfbda-f804-491e-b7c5-8876e024f9cb",
+      "name": "Iniciar flujo"
+    },
+    {
+      "parameters": {
+        "url": "https://catfact.ninja/fact",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "6770fd90-a7ba-473f-be77-dfc8ad3308d7",
+      "name": "Obtener curiosdad de gatos"
+    },
+    {
+      "parameters": {
+        "url": "https://api.mymemory.translated.net/get",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.fact }}"
+            },
+            {
+              "name": "langpair",
+              "value": "en|es"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "ecfb5d1b-54b1-4045-893e-8d0c795d9f5b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b01395e6-91ef-4713-9c80-735627a966a5",
+              "name": "mensaie",
+              "value": "={{ $json.responseData.translatedText }}",
+              "type": "string"
+            },
+            {
+              "id": "fdb60a4a-c462-4e45-99f1-26899c5e6f9d",
+              "name": "original_en",
+              "value": "={{ $('Obtener curiosdad de gatos').item.json.fact }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "df5f1af2-ad29-4d82-b057-6c1015ca0967",
+      "name": "Mensaje final"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Iniciar flujo": {
+      "main": [
+        [
+          {
+            "node": "Obtener curiosdad de gatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener curiosdad de gatos": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Mensaje final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e22235ea-edb4-4978-a289-1da46251341a",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "mk0fzeF7I3IF4sut",
+  "tags": []
+}

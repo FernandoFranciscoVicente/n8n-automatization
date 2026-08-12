@@ -1,0 +1,141 @@
+{
+  "name": "Adivino de edad",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dd2b0000-744a-4cd3-b51e-9b31faf23bf9",
+      "name": "Iniciar flujo"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "240e5538-e492-452b-9ee2-f9dd8ead4d37",
+              "name": "nombre",
+              "value": "María Mendoza",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "607de7c7-da1e-4843-b912-fd66f1d80e0b",
+      "name": "Definir nombre"
+    },
+    {
+      "parameters": {
+        "url": "https://api.agify.io",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.nombre }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "42637835-0846-406e-a155-f8664ace05ad",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b85dbe63-ea08-43fb-a592-9fe95273cdc2",
+              "name": "",
+              "value": "={{ $json.name }} tiene la edad de {{ $json.age }} años.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "b2f45aa7-d85a-470a-8a05-38fc85bce35a",
+      "name": "Respuesta final"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Iniciar flujo": {
+      "main": [
+        [
+          {
+            "node": "Definir nombre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Definir nombre": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respuesta final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6f91cd67-32d4-442b-a33e-c54b4b4f340b",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "f4jNiG3JpSHEDw1R",
+  "tags": [
+    {
+      "updatedAt": "2026-08-07T03:04:59.244Z",
+      "createdAt": "2026-08-07T03:04:59.244Z",
+      "id": "c55dwYGq52oko9ht",
+      "name": "HTTP"
+    }
+  ]
+}
