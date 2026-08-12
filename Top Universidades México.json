@@ -1,0 +1,232 @@
+{
+  "name": "Top Universidades México",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "3d20eeed-ff5d-4863-929d-7b3c0fef649c",
+      "name": "Inicio del flujo"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4406f8bb-5ecb-4e8a-ba49-4e0f19dfadec",
+              "name": "pais_busqueda",
+              "value": "Mexico",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        -16
+      ],
+      "id": "28b340ef-09aa-4210-b118-62154c4a33e5",
+      "name": "Selección de país de consulta"
+    },
+    {
+      "parameters": {
+        "url": "http://universities.hipolabs.com/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "country",
+              "value": "={{ $json.pais_busqueda }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "73e1c519-cf81-44d8-b367-20e98ea8a683",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        672,
+        -16
+      ],
+      "id": "ab8c62df-2461-401c-9a11-a6eb67dac7c6",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ac1b5bf-d1f0-4c0a-91dd-e22112c74107",
+              "name": "=texto_fila",
+              "value": "=Nombre de la institución: {{ $json.name }} Sitio web: {{ $json.web_pages[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        896,
+        -16
+      ],
+      "id": "9007f282-b393-4ed2-89ae-eb90d9478f27",
+      "name": "Formatear resultados"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "texto_fila",
+              "renameField": true,
+              "outputFieldName": "lista_mensajes"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        -16
+      ],
+      "id": "4fe9ddb6-2f6d-4ff7-bbb4-a4c38b2e4fc1",
+      "name": "Aggregate (Lista)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "728da02d-78b0-4c2a-8afb-bb7c90411679",
+              "name": "email_cuerpo",
+              "value": "=Top 3 universidades encontradas:\n{{ $json.lista_mensajes.join('\\n-----\\n')}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1344,
+        -16
+      ],
+      "id": "e1a31e97-4ff2-4d3b-b222-10d06b0221e1",
+      "name": "Envío de correo"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Inicio del flujo": {
+      "main": [
+        [
+          {
+            "node": "Selección de país de consulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selección de país de consulta": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Formatear resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear resultados": {
+      "main": [
+        [
+          {
+            "node": "Aggregate (Lista)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate (Lista)": {
+      "main": [
+        [
+          {
+            "node": "Envío de correo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9f30b288-6dd1-4393-b610-a0d9b067a386",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "dM8l3YbtS3vuUCFU",
+  "tags": [
+    {
+      "updatedAt": "2026-08-07T03:04:59.244Z",
+      "createdAt": "2026-08-07T03:04:59.244Z",
+      "id": "c55dwYGq52oko9ht",
+      "name": "HTTP"
+    }
+  ]
+}
