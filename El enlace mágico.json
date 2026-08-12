@@ -1,0 +1,72 @@
+{
+  "name": "El enlace mágico",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "magia",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a57cd6b4-390c-46f6-8721-07cfbcc7aa7e",
+      "name": "Webhook",
+      "webhookId": "e587ad76-4877-423f-b751-dca1c77854ac"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<div style=\"text-align:center; padding:50px; background-color: #1e1e1e; color: #e0e0e0; min-height: 100vh; font-family: sans-serif;\">\n    <h1 style=\"color: #ce93d8; font-size: 3em; margin-bottom: 20px;\">✨ ¡Magia Activada! 🎩</h1>\n    \n    <p style=\"font-size: 1.5em; color: #b0bec5; margin-bottom: 40px;\">Tu navegador acaba de encender el robot de n8n.</p>\n    \n    <a href=\"javascript:history.back()\" style=\"text-decoration: none; background: #6a1b9a; color: #ffffff; padding: 12px 24px; border-radius: 5px; border: 1px solid #8e24aa; font-weight: bold;\">Volver</a>\n</div>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "9edafeec-7177-4c06-ada9-d6c63c2fcee2",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "16fba940-124b-48f1-93fe-d469d8337571",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "A0P7hCKJpjvBs0ZC",
+  "tags": []
+}

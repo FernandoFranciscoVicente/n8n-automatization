@@ -1,0 +1,374 @@
+{
+  "name": "Buscador series TV",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.tvmaze.com/singlesearch/shows",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.serie }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        96
+      ],
+      "id": "c770cb77-54f3-4629-9de9-327e247cb0a0",
+      "name": "Consultar API"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <style>\n    /* Fondo general suave (no negro puro) para reducir fatiga visual */\n    body {\n      background-color: #121212;\n      color: #e0e0e0;\n      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 100vh;\n      margin: 0;\n    }\n\n    /* Tarjeta con elevación y gris ligeramente más claro */\n    .card {\n      background-color: #1e1e1e;\n      width: 100%;\n      max-width: 320px;\n      border-radius: 12px;\n      overflow: hidden;\n      box-shadow: 0 8px 24px rgba(0,0,0,0.4);\n      border: 1px solid #333;\n    }\n\n    img {\n      width: 100%;\n      height: auto;\n      display: block;\n      border-bottom: 1px solid #333;\n    }\n\n    .content {\n      padding: 24px;\n    }\n\n    h1 {\n      font-size: 1.6rem;\n      margin: 0 0 12px 0;\n      color: #ffffff;\n      line-height: 1.2;\n    }\n\n    .meta {\n      font-size: 0.85rem;\n      color: #9e9e9e;\n      margin-bottom: 20px;\n      display: flex;\n      justify-content: space-between;\n      font-weight: 500;\n    }\n\n    /* Regla especial: Fuerza el color del texto del resumen */\n    /* El !important asegura que si el JSON trae estilos, los ignoramos */\n    .summary-text, .summary-text p {\n      font-size: 0.95rem;\n      line-height: 1.6;\n      color: #b0b3b8 !important; \n      margin-bottom: 25px;\n    }\n\n    /* Botón azul moderno (Material Design style) */\n    .btn {\n      display: block;\n      width: 100%;\n      padding: 12px 0;\n      background-color: #2979ff; \n      color: white;\n      text-align: center;\n      text-decoration: none;\n      font-weight: 600;\n      border-radius: 8px;\n      transition: background-color 0.2s;\n    }\n\n    .btn:hover {\n      background-color: #1565c0;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"card\">\n    <img src=\"{{ $json.image.original }}\" alt=\"Poster\">\n    \n    <div class=\"content\">\n      <h1>{{ $json.name }}</h1>\n      \n      <div class=\"meta\">\n        <span>⭐ {{ $json.rating?.average ? $json.rating.average + '/10' : 'Sin puntuación' }}</span>\n        <span>📅 {{ $json.premiered }}</span>\n      </div>\n      \n      <div class=\"summary-text\">\n        {{ $json.summary }}\n      </div>\n      \n     <a href=\"https://fernando-francisco.app.n8n.cloud/form/d8e3e981-6139-4952-871b-6bd6c5e5f360\" class=\"btn\">Volver a buscar</a>\n    </div>\n  </div>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1792,
+        96
+      ],
+      "id": "b5d7af41-1a04-4955-ad0c-488d36707dbc",
+      "name": "Mostrar serie",
+      "webhookId": "8cb3ed71-ee98-45ff-bd9e-5ac4770f4259"
+    },
+    {
+      "parameters": {
+        "formTitle": "Buscador de series de TV",
+        "formDescription": "Elije una serie para ver su ficha informativa",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Selecciona una serie",
+              "fieldType": "dropdown",
+              "fieldName": "serie",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nadie nos va a extrañar"
+                  },
+                  {
+                    "option": "Severance"
+                  },
+                  {
+                    "option": "The Office"
+                  },
+                  {
+                    "option": "Bojack Horseman"
+                  },
+                  {
+                    "option": "Regular show"
+                  },
+                  {
+                    "option": "The big bang Theory"
+                  },
+                  {
+                    "option": "The Rehearsal"
+                  },
+                  {
+                    "option": "Black Mirror"
+                  },
+                  {
+                    "option": "The end of the f***ing world"
+                  },
+                  {
+                    "option": "Breaking bad"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Enviar",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "¡Tus datos se han enviado correctamente!"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        96
+      ],
+      "id": "4a701f9d-7902-4d3c-9704-85e77c60a311",
+      "name": "Elegir serie",
+      "webhookId": "d8e3e981-6139-4952-871b-6bd6c5e5f360"
+    },
+    {
+      "parameters": {
+        "url": "https://api.mymemory.translated.net/get",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.chunk }}"
+            },
+            {
+              "name": "langpair",
+              "value": "en|es"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        896,
+        96
+      ],
+      "id": "0cb663c4-2dc4-4fef-bdff-956fbb98b17a",
+      "name": "Traducir resúmen de serie"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5a347bc8-a3aa-4a19-8c34-819a60b11892",
+              "name": "summary",
+              "value": "={{ $json.summary.replace(/<[^>]*>/g, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        96
+      ],
+      "id": "f2e581f4-9a90-427a-a0dd-30cd1ac6175a",
+      "name": "Limpiar resumen"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4edf479a-11e5-4707-9837-fae6f305805d",
+              "name": "=name",
+              "value": "={{ $('Consultar API').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "efbee423-455a-4b01-ada3-97fe269de6a9",
+              "name": "premiered",
+              "value": "={{ $('Consultar API').item.json.premiered }}",
+              "type": "string"
+            },
+            {
+              "id": "626c8b2b-654c-4520-a092-db260540fc1e",
+              "name": "rating",
+              "value": "={{ $('Consultar API').item.json.rating }}",
+              "type": "object"
+            },
+            {
+              "id": "31ca1a9b-8c05-417a-b6eb-9e9a1c098c99",
+              "name": "image",
+              "value": "={{ $('Consultar API').item.json.image }}",
+              "type": "object"
+            },
+            {
+              "id": "756ecd05-bf5b-4781-96de-3371ad37224f",
+              "name": "summary",
+              "value": "={{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1568,
+        96
+      ],
+      "id": "fc79b36b-7ba9-4894-bd3b-3164592f757e",
+      "name": "Reconstruir datos"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst summary = item.json.summary;\n\nconst maxLength = 450;\nconst chunks = [];\n\nlet remaining = summary;\n\nwhile (remaining.length > maxLength) {\n  let cut = remaining.lastIndexOf(' ', maxLength);\n\n  if (cut === -1) {\n    cut = maxLength;\n  }\n\n  chunks.push(remaining.slice(0, cut).trim());\n  remaining = remaining.slice(cut).trim();\n}\n\nif (remaining.length > 0) {\n  chunks.push(remaining);\n}\n\nreturn chunks.map((chunk, index) => ({\n  json: {\n    chunk,\n    chunkIndex: index\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        96
+      ],
+      "id": "9551f330-eaf8-4b7b-a9b9-794c847dfb3b",
+      "name": "Dividir resumen"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d88c4b7f-b654-4a26-8966-c33595dad0d2",
+              "name": "chuckIndex",
+              "value": "={{ $('Dividir resumen').item.json.chunkIndex }}",
+              "type": "number"
+            },
+            {
+              "id": "16c232a5-c966-43b7-9e7c-4acdc4fbf91f",
+              "name": "=translation",
+              "value": "={{ $json.matches[0].translation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1120,
+        96
+      ],
+      "id": "3f744c3d-7bea-4021-9c3a-b6d6257bdfb1",
+      "name": "Preparar traducción"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nitems.sort((a, b) => {\n  return a.json.chunkIndex - b.json.chunkIndex;\n});\n\nconst summary = items\n  .map(item => item.json.translation)\n  .join(' ');\n\nreturn [\n  {\n    json: {\n      summary\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        96
+      ],
+      "id": "0c954713-5db1-49a8-91c1-8a36beca84e4",
+      "name": "Reconstruir resúmen"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Consultar API": {
+      "main": [
+        [
+          {
+            "node": "Limpiar resumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Elegir serie": {
+      "main": [
+        [
+          {
+            "node": "Consultar API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Traducir resúmen de serie": {
+      "main": [
+        [
+          {
+            "node": "Preparar traducción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limpiar resumen": {
+      "main": [
+        [
+          {
+            "node": "Dividir resumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reconstruir datos": {
+      "main": [
+        [
+          {
+            "node": "Mostrar serie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dividir resumen": {
+      "main": [
+        [
+          {
+            "node": "Traducir resúmen de serie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar traducción": {
+      "main": [
+        [
+          {
+            "node": "Reconstruir resúmen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reconstruir resúmen": {
+      "main": [
+        [
+          {
+            "node": "Reconstruir datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "775f0ed1-3e97-4ed1-b75c-4a233127915b",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "9Ge8w5901uHx9D6f",
+  "tags": [
+    {
+      "updatedAt": "2026-08-11T03:33:36.670Z",
+      "createdAt": "2026-08-11T03:33:36.670Z",
+      "id": "DWACk0tP0yY9LrCU",
+      "name": "n8nForm"
+    }
+  ]
+}

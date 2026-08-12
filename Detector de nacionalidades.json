@@ -1,0 +1,110 @@
+{
+  "name": "Detector de nacionalidades",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <style>\n    body {\n      background-color: #121212;\n      font-family: 'Segoe UI', sans-serif;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      height: 100vh;\n      margin: 0;\n      color: #e0e0e0;\n    }\n    .card {\n      background: #1e1e1e;\n      padding: 40px;\n      border-radius: 16px;\n      box-shadow: 0 10px 30px rgba(0,0,0,0.5);\n      border: 1px solid #333;\n      text-align: center;\n      width: 300px;\n    }\n    h1 { color: #818cf8; margin: 0; font-size: 2em; }\n    h2 { color: #b0bec5; font-weight: normal; font-size: 1.2em; margin-top: 10px; }\n    b { color: #ffffff; font-weight: 600; }\n    .result {\n      font-size: 2.5em;\n      margin: 25px 0;\n      font-weight: bold;\n      color: #ffffff;\n      background-color: #262626;\n      border: 2px dashed #4f46e5;\n      border-radius: 12px;\n      padding: 15px;\n      text-shadow: 0 2px 4px rgba(0,0,0,0.5);\n      word-wrap: break-word;\n    }\n    .prob {\n      font-size: 0.9em;\n      color: #9ca3af;\n      margin-bottom: 25px;\n    }\n    .btn {\n      display: block;\n      margin-top: 20px;\n      background: #4f46e5;\n      color: white;\n      padding: 12px;\n      text-decoration: none;\n      border-radius: 8px;\n      font-weight: bold;\n      transition: background 0.3s ease;\n    }\n    .btn:hover { background: #4338ca; }\n  </style>\n</head>\n<body>\n  <div class=\"card\">\n    <h2>El nombre <b>{{ $('Formulario nombre').first().json.nombre }}</b> parece ser de:</h2>\n    \n    \n    <div class=\"results\">\n  {{\n    $json.country.slice(0, 3).map((item, index) => `\n      <div class=\"country\">\n        <strong>${index + 1}. ${new Intl.DisplayNames(['es'], { type: 'region' }).of(item.country_id)}</strong>\n        <span>${(item.probability * 100).toFixed(1)}%</span>\n      </div>\n    `).join('')\n  }}\n  </div>\n    \n    <a href=\"https://fernando-francisco.app.n8n.cloud/form/e68fa5e4-e5f5-4ac5-810f-3ea606b596a2\" class=\"btn\">Probar otro nombre</a>\n  </div>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "c12b5675-d5e9-49b4-b4a8-f551ab1dd841",
+      "name": "Mostrar resultado",
+      "webhookId": "f0a5b5d7-12cb-4abe-ab99-7d67709adb05"
+    },
+    {
+      "parameters": {
+        "formTitle": "Descifrador de nacionalidades",
+        "formDescription": "Escribe un nombre y la IA adivinará de dónde es.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Escribe tu nombre",
+              "fieldName": "nombre"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Enviar"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6049b793-cb6b-4396-9846-fd42e28c1290",
+      "name": "Formulario nombre",
+      "webhookId": "e68fa5e4-e5f5-4ac5-810f-3ea606b596a2"
+    },
+    {
+      "parameters": {
+        "url": "https://api.nationalize.io",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.nombre }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "1c7bec35-e56e-4a53-9e80-4cddd5b53fd4",
+      "name": "Consultar API"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Formulario nombre": {
+      "main": [
+        [
+          {
+            "node": "Consultar API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar API": {
+      "main": [
+        [
+          {
+            "node": "Mostrar resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e350ecad-755b-45e2-8eec-1e762c8852ab",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "IUg0OIkecLnUPl58",
+  "tags": []
+}

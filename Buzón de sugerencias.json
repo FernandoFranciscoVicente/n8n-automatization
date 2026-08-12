@@ -1,0 +1,185 @@
+{
+  "name": "Buzón de sugerencias",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Buzón de queja",
+        "formDescription": "Envía tu queda, ayúdanos a mejorar para ti",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre",
+              "fieldName": "nombre"
+            },
+            {
+              "fieldLabel": "Queja",
+              "fieldType": "textarea",
+              "fieldName": "queja"
+            },
+            {
+              "fieldLabel": "¿Es urgente?",
+              "fieldType": "checkbox",
+              "fieldName": "urgencia",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Sí"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        -32
+      ],
+      "id": "22921d1a-56aa-4bfb-9b28-b26b28a208fe",
+      "name": "On form submission",
+      "webhookId": "7ad08a7c-645d-4d24-a098-a0a23ee56528"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d222e40d-2357-448a-8c9d-c87d1747f24c",
+              "leftValue": "={{ $json.urgencia[0] }}",
+              "rightValue": {},
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        -32
+      ],
+      "id": "ad7894cd-b214-4a4f-9538-563bec94fddc",
+      "name": "¿Es urgente?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8a7ba447-8278-441c-8601-8d2b757a05c4",
+              "name": "accion",
+              "value": "=Alerta crítica",
+              "type": "string"
+            },
+            {
+              "id": "e9810c03-86d8-4af2-b658-79615106a9b4",
+              "name": "detalle",
+              "value": "=El usuario {{ $json.nombre }} dice: {{ $json.queja }} ¡Atender de manera urgente!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        464,
+        -112
+      ],
+      "id": "afaa0f91-d867-49c4-bf66-8cdcb94637dd",
+      "name": "Alerta crítica"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dbe5bb78-e006-40a0-8586-1429e84df170",
+              "name": "accion",
+              "value": "Archivar en papelera",
+              "type": "string"
+            },
+            {
+              "id": "72972c1b-6235-41ee-8fcc-afa32f635c0c",
+              "name": "detalle",
+              "value": "=Sugerencia del usuario: {{  $json.nombre }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        464,
+        64
+      ],
+      "id": "68027f4f-bf1d-4c60-b8bb-40dd418b825c",
+      "name": "Archivar"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "¿Es urgente?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es urgente?": {
+      "main": [
+        [
+          {
+            "node": "Alerta crítica",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Archivar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "df09cb3e-0771-4180-8e95-0aaf2c3a3710",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "NaC6KadKUG4udr3N",
+  "tags": []
+}

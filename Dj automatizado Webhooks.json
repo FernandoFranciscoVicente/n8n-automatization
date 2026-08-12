@@ -1,0 +1,420 @@
+{
+  "name": "Dj automatizado Webhooks",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        128
+      ],
+      "id": "b65c256f-a7f0-426c-9cd8-31a07bb4461b",
+      "name": "Iniciar flujo"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        672,
+        128
+      ],
+      "id": "da64e834-0ebe-45e0-9632-8faacdcee857",
+      "name": "Iteramos canciones"
+    },
+    {
+      "parameters": {
+        "jsCode": "return[\n  {canción: \"Vanished\", genero: \"electrónica\"},\n  {canción: \"Cara de nada\", genero: \"rock\"},\n  {canción: \"First of the year equinox\", genero: \"electrónica\"},\n  {canción: \"Marmalade\", genero: \"rock\" },\n  {canción: \"Bailando solo\", genero: \"rock\"},\n  {canción: \"Paloma ajena\", genero: \"Cumbia\"},\n  {canción: \"Perfecta\", genero: \"pop\"},\n  {canción: \"Toxicity\", genero: \"rock\"},\n  {canción: \"Tu pelo\", genero: \"Bolero\" },\n  {canción: \"El gigante de hierro\", genero: \"Cumbia\"},\n  {canción: \"La estrella del baile\", genero: \"rock\"},\n  {canción: \"Baile de mierda\", genero: \"cumbia/rock\"},\n  {canción: \"Submit\", genero: \"electrónica\"},\n  {canción: \"Llueve sobre la ciudad\", genero: \"rock\" },\n  {canción: \"Bailando solo\", genero: \"rock\"}\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        128
+      ],
+      "id": "f0395f50-1e5d-4cd1-9cec-573ec2eee98b",
+      "name": "Definir canciones"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "901fe5ac-020a-4b23-84cf-dd9715e21180",
+              "leftValue": "={{ $json.genero }}",
+              "rightValue": "=rock",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        128
+      ],
+      "id": "c512679c-7bb5-45b6-ab02-19227cee9178",
+      "name": "Criterio de condición"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "361828e9-e2ce-42c0-afb1-72b7e8c99a4f",
+              "name": "es_favorita",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1120,
+        32
+      ],
+      "id": "8eebf247-15ea-4e35-936e-3443956b9b66",
+      "name": "Marcar como favorito"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a756cc93-90e1-4f48-88b3-c7ec75ddba25",
+              "name": "es_favorita",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1120,
+        224
+      ],
+      "id": "18aa909e-7202-40dc-93f9-997dc6deae5c",
+      "name": "No favorito"
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        896,
+        -160
+      ],
+      "id": "59485d4f-9267-439a-802f-38ac1dfc1747",
+      "name": "Mostrar resultados"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1344,
+        224
+      ],
+      "id": "a5e1d312-bb63-441f-9f52-c5e271b33fe1",
+      "name": "Unir salidas (merge)"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "playlist",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -160
+      ],
+      "id": "1de598b6-39e7-49a8-8711-b9c3915c7a42",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e5422fba-7f75-4704-b41e-a707440a3dfa",
+              "name": "asunto",
+              "value": "Tu playlist personalizada está lista",
+              "type": "string"
+            },
+            {
+              "id": "7cbb3450-58e0-4d60-96a0-e155f39412d7",
+              "name": "cuerpo_email",
+              "value": "={{ JSON.stringify($json.playlist) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1792,
+        -160
+      ],
+      "id": "7ead9cf3-187b-43b0-a880-d6dfa760d129",
+      "name": "Simulación de envío de email"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "65926529-be4d-46ed-9d7e-c4410bfa4803",
+              "leftValue": "={{ $json.es_favorita }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1120,
+        -160
+      ],
+      "id": "02b5b2b0-6d5d-4207-b945-1ce73ff65d14",
+      "name": "Filtrar canciones favoritas"
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        448,
+        128
+      ],
+      "id": "473f08ec-233b-4279-adc0-a1e2b1f8c1dd",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "canción"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        -160
+      ],
+      "id": "f2b42ea3-0df5-4d12-a255-3a97e781a933",
+      "name": "Ordenamiento por canción (sort)"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Iniciar flujo": {
+      "main": [
+        [
+          {
+            "node": "Definir canciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Iteramos canciones": {
+      "main": [
+        [
+          {
+            "node": "Mostrar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criterio de condición",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Definir canciones": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criterio de condición": {
+      "main": [
+        [
+          {
+            "node": "Marcar como favorito",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No favorito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar como favorito": {
+      "main": [
+        [
+          {
+            "node": "Unir salidas (merge)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No favorito": {
+      "main": [
+        [
+          {
+            "node": "Unir salidas (merge)",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Unir salidas (merge)": {
+      "main": [
+        [
+          {
+            "node": "Iteramos canciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mostrar resultados": {
+      "main": [
+        [
+          {
+            "node": "Filtrar canciones favoritas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Simulación de envío de email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar canciones favoritas": {
+      "main": [
+        [
+          {
+            "node": "Ordenamiento por canción (sort)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Iteramos canciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordenamiento por canción (sort)": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b85f0745-3889-49c1-9402-12138113e484",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "sGrmEChftH6zMMS7",
+  "tags": []
+}
