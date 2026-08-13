@@ -1,0 +1,126 @@
+{
+  "name": "Subir-PDF-Drive",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Envío de documentos",
+        "formDescription": "Sube tu reporte de PDF aquí",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre de archivo",
+              "fieldName": "nombre_archivo"
+            },
+            {
+              "fieldLabel": "Sube tu PDF",
+              "fieldType": "file",
+              "fieldName": "my_doc"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Subir a Drive"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b631c2a7-526f-4a28-8694-8501dba1d31c",
+      "name": "Formulario con archivo",
+      "webhookId": "82b0504b-3c9a-44e6-bd37-181b5dcdf300"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body {\n      /* Fondo oscuro (casi negro) para la página */\n      background-color: #121212;\n      font-family: sans-serif;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      height: 100vh;\n      margin: 0;\n      color: #e0e0e0; /* Texto base gris claro */\n    }\n    .card {\n      /* Fondo de la tarjeta un poco más claro que el body para dar profundidad */\n      background-color: #1e1e1e;\n      padding: 40px;\n      border-radius: 15px;\n      text-align: center;\n      /* Sombra más intensa para que se note en lo oscuro */\n      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);\n      border: 1px solid #333; /* Borde sutil */\n    }\n    h1 {\n      /* Verde brillante/pastel para que resalte sobre negro */\n      color: #66bb6a;\n      margin-bottom: 20px;\n    }\n    p {\n      color: #b0bec5; /* Gris azulado para el texto secundario */\n    }\n    b {\n      color: #ffffff; /* El nombre del archivo en blanco puro */\n    }\n    a {\n      /* Verde claro para el enlace */\n      color: #81c784;\n      text-decoration: none;\n      font-weight: bold;\n      border: 1px solid #81c784;\n      padding: 10px 20px;\n      border-radius: 5px;\n      transition: all 0.3s ease;\n      display: inline-block;\n      margin-top: 15px;\n    }\n    /* Efecto Hover para el botón */\n    a:hover {\n      background-color: #81c784;\n      color: #121212;\n    }\n  </style>\n</head>\n<body>\n  <div class='card'>\n    <h1>🚀 ¡Archivo Subido!</h1>\n    <p>Tu documento <b>{{ $json.name }}</b> ya está seguro en Google Drive.</p>\n    <a href='{{ $json.webViewLink }}' target='_blank'>Ver archivo en Drive</a>\n  </div>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        416,
+        0
+      ],
+      "id": "53976f96-fb27-443d-9359-2c49a66a09fa",
+      "name": "Confirmación",
+      "webhookId": "b4cf09a1-dc41-4fe4-a73c-e52334642728"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "my_doc",
+        "name": "={{ $json.nombre_archivo }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1A2i8F-n68FZgumYCtt-X_K7xHBv8aSJG",
+          "mode": "list",
+          "cachedResultName": "Archivos-n8n",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1A2i8F-n68FZgumYCtt-X_K7xHBv8aSJG"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "08cbb44d-1bab-4721-8add-2e3921da10e2",
+      "name": "Subir a drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GDro4jXb4RaiNtR5",
+          "name": "Google Drive account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Formulario con archivo": {
+      "main": [
+        [
+          {
+            "node": "Subir a drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subir a drive": {
+      "main": [
+        [
+          {
+            "node": "Confirmación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "0bb73468-a3e3-4de7-a093-b8f868063ce9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "knGg2IPBIELZ74Xr",
+  "tags": []
+}
