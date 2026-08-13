@@ -1,0 +1,149 @@
+{
+  "name": "Subir un archivo a Drive",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a40594ad-91c1-4eb2-bd53-105273bce420",
+      "name": "Iniciar flujo"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee3048b1-c57b-4def-9d05-085c81a0b4c1",
+              "name": "nombre_archivo",
+              "value": "mi-primer-archivo.txt",
+              "type": "string"
+            },
+            {
+              "id": "8fe6a2a9-4666-45b0-98e3-f98f0fb96c50",
+              "name": "contenido",
+              "value": "Hola Google Drive. Este archivo fue creado desde n8n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "57010301-9e7c-4b3d-9af6-3b75d8cf4e20",
+      "name": "Crear el contenido del archivo"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "contenido",
+        "binaryPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "2b8a6519-deca-4299-a109-5a961ef0ee2d",
+      "name": "Convertir archivo a Binarios"
+    },
+    {
+      "parameters": {
+        "name": "mi-primer-archivo.txt",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        672,
+        0
+      ],
+      "id": "c53bf108-d4ca-4239-93f1-5be4a902aff2",
+      "name": "Subir archivo a Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "APbl3KDFdmBDjXdl",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Iniciar flujo": {
+      "main": [
+        [
+          {
+            "node": "Crear el contenido del archivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear el contenido del archivo": {
+      "main": [
+        [
+          {
+            "node": "Convertir archivo a Binarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convertir archivo a Binarios": {
+      "main": [
+        [
+          {
+            "node": "Subir archivo a Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "a726d1dd-3d59-433a-916c-9b6c6d0ae965",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "5IrR0XoXwcVL0QhQ",
+  "tags": [
+    {
+      "name": "Google drive",
+      "id": "ZgL9K2AjZfeJVe2Y",
+      "updatedAt": "2026-08-13T05:07:12.687Z",
+      "createdAt": "2026-08-13T05:07:12.687Z"
+    }
+  ]
+}
