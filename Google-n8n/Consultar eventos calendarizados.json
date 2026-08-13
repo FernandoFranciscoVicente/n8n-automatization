@@ -1,0 +1,85 @@
+{
+  "name": "Consultar eventos calendarizados",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8f29f1e6-8bd4-492c-8c22-f6aeb9e2e5e4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "f3rnandogaff@gmail.com",
+          "mode": "list",
+          "cachedResultName": "f3rnandogaff@gmail.com"
+        },
+        "returnAll": true,
+        "timeMin": "={{ $today }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5cd3b843-d3a5-432d-82d9-f3d2e7b7eaf7",
+      "name": "Obtener eventos de calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "KjQMESbN6CIJfjW1",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Obtener eventos de calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "a2c95e12-1ddd-45bc-9c43-0dfe1a284432",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "KoZtH0VJG1UFrSpE",
+  "tags": [
+    {
+      "updatedAt": "2026-08-12T02:31:28.933Z",
+      "createdAt": "2026-08-12T02:31:28.933Z",
+      "id": "0p47QVCpOAlagtqC",
+      "name": "google api"
+    },
+    {
+      "updatedAt": "2026-08-12T03:07:31.221Z",
+      "createdAt": "2026-08-12T02:31:37.015Z",
+      "id": "YmugXlOg2n2hQaLh",
+      "name": "google calendar"
+    }
+  ]
+}

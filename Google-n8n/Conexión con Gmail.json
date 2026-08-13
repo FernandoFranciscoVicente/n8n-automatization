@@ -1,0 +1,82 @@
+{
+  "name": "Conexión con Gmail",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a2cf85b0-99b0-4904-b1f8-6e96344ddead",
+      "name": "Iniciar flujo"
+    },
+    {
+      "parameters": {
+        "sendTo": "dariacortazar18@gmail.com",
+        "subject": "Correo enviado desde n8n",
+        "message": "=<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Prueba de Conexión n8n - Gmail</title>\n    <style>\n        body {\n            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;\n            background-color: #f4f6f9;\n            margin: 0;\n            padding: 20px;\n            color: #333333;\n        }\n        .container {\n            max-width: 600px;\n            margin: 0 auto;\n            background-color: #ffffff;\n            border-radius: 8px;\n            overflow: hidden;\n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);\n            border: 1px solid #e1e8ed;\n        }\n        .header {\n            background: linear-gradient(135deg, #ff6d5a 0%, #ea4b71 100%);\n            color: #ffffff;\n            padding: 30px 25px;\n            text-align: center;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 24px;\n            font-weight: 700;\n            letter-spacing: 0.5px;\n        }\n        .header p {\n            margin: 8px 0 0 0;\n            font-size: 14px;\n            opacity: 0.9;\n        }\n        .status-badge {\n            display: inline-block;\n            background-color: #28a745;\n            color: white;\n            padding: 6px 16px;\n            border-radius: 20px;\n            font-size: 13px;\n            font-weight: bold;\n            margin-top: 15px;\n            text-transform: uppercase;\n            letter-spacing: 1px;\n        }\n        .content {\n            padding: 30px 25px;\n            line-height: 1.6;\n        }\n        .content h2 {\n            color: #1a252c;\n            font-size: 18px;\n            margin-top: 0;\n        }\n        .info-table {\n            width: 100%;\n            border-collapse: collapse;\n            margin: 20px 0;\n            background-color: #f8fafc;\n            border-radius: 6px;\n            overflow: hidden;\n            border: 1px solid #e2e8f0;\n        }\n        .info-table td {\n            padding: 12px 16px;\n            font-size: 14px;\n            border-bottom: 1px solid #e2e8f0;\n        }\n        .info-table tr:last-child td {\n            border-bottom: none;\n        }\n        .info-label {\n            font-weight: 600;\n            color: #4a5568;\n            width: 40%;\n        }\n        .info-value {\n            color: #2d3748;\n            font-family: 'Courier New', Courier, monospace;\n        }\n        .payload-box {\n            background-color: #1e293b;\n            color: #38bdf8;\n            padding: 15px;\n            border-radius: 6px;\n            font-family: 'Courier New', Courier, monospace;\n            font-size: 13px;\n            white-space: pre-wrap;\n            word-break: break-all;\n            margin-top: 15px;\n        }\n        .footer {\n            background-color: #f8fafc;\n            padding: 20px;\n            text-align: center;\n            font-size: 12px;\n            color: #718096;\n            border-top: 1px solid #e2e8f0;\n        }\n        .footer a {\n            color: #ea4b71;\n            text-decoration: none;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <!-- Encabezado con gradiente característico de n8n -->\n        <div class=\"header\">\n            <h1>n8n Automation Engine</h1>\n            <p>Prueba de integración de correo electrónico</p>\n            <div class=\"status-badge\">✓ Conexión Exitosa</div>\n        </div>\n\n        <!-- Contenido principal -->\n        <div class=\"content\">\n            <h2>¡Hola! 👋</h2>\n            <p>Si estás recibiendo este mensaje, significa que el nodo de <strong>Gmail</strong> en tu flujo de trabajo de <strong>n8n</strong> ha sido configurado correctamente y las credenciales de API están funcionando sin problemas.</p>\n            \n            <p>A continuación se muestran los detalles técnicos de esta ejecución de prueba:</p>\n\n            <!-- Tabla de datos clave/valor para n8n -->\n            <table class=\"info-table\">\n                <tr>\n                    <td class=\"info-label\">Flujo / Workflow ID:</td>\n                    <td class=\"info-value\">{{ $workflow.id || 'wf_test_99823' }}</td>\n                </tr>\n                <tr>\n                    <td class=\"info-label\">Ejecución ID:</td>\n                    <td class=\"info-value\">{{ $execution.id || 'exec_88301' }}</td>\n                </tr>\n                <tr>\n                    <td class=\"info-label\">Marca de Tiempo:</td>\n                    <td class=\"info-value\">{{ $now.format('YYYY-MM-DD HH:mm:ss') }}</td>\n                </tr>\n                <tr>\n                    <td class=\"info-label\">Entorno:</td>\n                    <td class=\"info-value\">Production / Test</td>\n                </tr>\n            </table>\n\n            <p style=\"margin-top: 25px; margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #4a5568;\">Ejemplo de Payload Recibido (JSON):</p>\n            <div class=\"payload-box\">{\n  \"status\": 200,\n  \"message\": \"Prueba de comunicación exitosa\",\n  \"source\": \"n8n_workflow_node\",\n  \"target\": \"gmail_api\"\n}</div>\n        </div>\n\n        <!-- Pie de página -->\n        <div class=\"footer\">\n            <p>Este es un correo automático generado para pruebas de integraciones.</p>\n            <p>© 2026 n8n Workflow Automation Engine</p>\n        </div>\n    </div>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fbc2940f-4f71-4ef5-9b35-e6d78045dc03",
+      "name": "Enviar un correo",
+      "webhookId": "e4f8e612-8323-4cd7-8460-d1af50162d99",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AGgcUb63oWCGowdg",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Iniciar flujo": {
+      "main": [
+        [
+          {
+            "node": "Enviar un correo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2067c36f-0c48-40a6-b94e-f17e9af5b96a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "Bc3tRlBPQA465k2x",
+  "tags": [
+    {
+      "updatedAt": "2026-08-12T02:31:28.933Z",
+      "createdAt": "2026-08-12T02:31:28.933Z",
+      "id": "0p47QVCpOAlagtqC",
+      "name": "google api"
+    },
+    {
+      "name": "google gmail",
+      "id": "u4mS8ccAfPJq8jp7",
+      "updatedAt": "2026-08-13T03:21:20.890Z",
+      "createdAt": "2026-08-13T03:21:20.890Z"
+    }
+  ]
+}

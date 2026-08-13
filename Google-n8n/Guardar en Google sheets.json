@@ -1,0 +1,181 @@
+{
+  "name": "Guardar en Google sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1fpCBzNA2kzh56DcPdCayxGPQdxzT4hy0ztRba514ikw",
+          "mode": "list",
+          "cachedResultName": "Sheet de n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fpCBzNA2kzh56DcPdCayxGPQdxzT4hy0ztRba514ikw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Datos del usuario",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fpCBzNA2kzh56DcPdCayxGPQdxzT4hy0ztRba514ikw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $json.nombre }}",
+            "Email": "={{ $json.email }}",
+            "Teléfono": "={{ $json.tel }}",
+            "Fecha de registro": "={{ DateTime.fromISO($json.submittedAt).toFormat('dd/MM/yyyy HH:mm') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Teléfono",
+              "displayName": "Teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha de registro",
+              "displayName": "Fecha de registro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "3b4c2b34-76e8-4aaa-a1e6-3e434abea39d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e76PHu8njOd8LQze",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<style>\n  body {\n    font-family: 'Segoe UI', sans-serif;\n    background: #121212; /* Fondo casi negro */\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 100vh;\n    margin: 0;\n    color: #b0bec5; /* Texto gris suave */\n  }\n  .card {\n    background: #1e1e1e; /* Tarjeta gris oscuro */\n    padding: 40px;\n    border-radius: 12px;\n    box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Sombra profunda */\n    border: 1px solid #333; /* Borde sutil para definición */\n    text-align: center;\n    min-width: 250px;\n  }\n  h1 {\n    color: #80cbc4; /* Verde Menta brillante (Teal claro) */\n    margin-top: 0;\n    font-size: 2em;\n  }\n  p {\n    font-size: 1.1em;\n  }\n</style>\n</head>\n<body>\n  <div class='card'>\n    <h1>✅ ¡Guardado!</h1>\n    <p>Tus datos ya están seguros en Google Sheets.</p>\n  </div>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        432,
+        0
+      ],
+      "id": "2142e85d-0b54-4fa1-aa22-96f301ffc3a9",
+      "name": "Confirmación",
+      "webhookId": "ef8f9b9c-ee58-4791-a2ea-221421480f8a"
+    },
+    {
+      "parameters": {
+        "formTitle": "Registro de Usuarios",
+        "formDescription": "Llena tus datos para ser guardados en la nube.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Tu nombre completo",
+              "fieldName": "nombre"
+            },
+            {
+              "fieldLabel": "Ingresa tu correo electrónico",
+              "fieldType": "email",
+              "fieldName": "email"
+            },
+            {
+              "fieldLabel": "Teléfono móvil",
+              "fieldType": "number",
+              "fieldName": "tel"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Guardar datos"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2700f929-8835-4053-9607-48a5434f5cd8",
+      "name": "Guardar en Sheets",
+      "webhookId": "586d5aa0-a2fc-4039-be4b-bae5726e5e96"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Confirmación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar en Sheets": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "739537b9-04fd-420d-99e1-6d77f621d3bb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "HQGX1sCHxjUYLGzT",
+  "tags": []
+}
