@@ -1,0 +1,80 @@
+{
+  "name": "Primeros pasos con slack",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dc506477-0ec5-4f17-87fe-87ffcf8ae175",
+      "name": "Inicio de flujo"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "user",
+        "user": {
+          "__rl": true,
+          "value": "U0BQ3C0U337",
+          "mode": "list",
+          "cachedResultName": "f3rnandogaff"
+        },
+        "text": "Hola, soy tu asistente virtual desde n8n. Este es mi primer mensaje",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c62f98d6-0b68-4417-adad-eb1c602910dd",
+      "name": "Enviar mensaje",
+      "webhookId": "66f5da95-8926-49b7-9966-e34d523a243c",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "6sRUVeIqzS007fuc",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Inicio de flujo": {
+      "main": [
+        [
+          {
+            "node": "Enviar mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "d377714f-782b-4d03-8442-e0578b8ded9a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "NU2kT21Rci6cKeeS",
+  "tags": [
+    {
+      "name": "Slack API",
+      "id": "D7lFp9Zf9i5MvZYq",
+      "updatedAt": "2026-08-14T23:48:24.685Z",
+      "createdAt": "2026-08-14T23:48:24.685Z"
+    }
+  ]
+}
