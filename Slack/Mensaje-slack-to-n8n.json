@@ -1,0 +1,51 @@
+{
+  "name": "Mensaje-slack-to-n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "trigger": [
+          "app_mention",
+          "any_event"
+        ],
+        "channelId": {
+          "__rl": true,
+          "value": "C0BPRMQAEDD",
+          "mode": "list",
+          "cachedResultName": "nuevo-canal"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4b367462-7843-4395-8bd2-613051db72f6",
+      "name": "Slack Trigger",
+      "webhookId": "e1529b6c-0f7d-42e2-b93b-9da795204547",
+      "credentials": {
+        "slackApi": {
+          "id": "yhpdsYMxila6u5Cc",
+          "name": "Slack account 4"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "79773bec-d543-41e1-b73f-e044e0471685",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "reVJWLvCKW8sVDVh",
+  "tags": []
+}
