@@ -1,0 +1,37 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a3e2fdd2-d19a-4a4e-ab76-210d9998bcbe",
+      "name": "WhatsApp Trigger",
+      "webhookId": "a0b12eb5-b004-4a69-a35a-6877c1434dc2"
+    }
+  ],
+  "pinData": {},
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ec98a623-f983-4f83-a217-392bb82889a7",
+  "meta": {
+    "instanceId": "9b9c7f2e345f6d485338915b85203c38b382e3430f41f40e14897d1028102143"
+  },
+  "nodeGroups": [],
+  "id": "ivGmq1m81jlGkHiH",
+  "tags": []
+}
